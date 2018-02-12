@@ -4,9 +4,88 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileWatcher"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
+        xmlns:viewModels="clr-namespace:FileWatcher.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="FileWatcher" 
+        DataContext="{dxmvvm:ViewModelSource Type=viewModels:MainViewModel}" >
+
+    <Grid Style="{StaticResource MainWindowStyle }">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Column="0" Text="{Binding FileContent, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+
+        <Border Grid.Column="1">
+             <Grid Margin="5">
+                 <Grid.RowDefinitions>
+                     <RowDefinition Height="Auto"/>
+                     <RowDefinition Height="Auto"/>
+                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                     <RowDefinition />
+                 </Grid.RowDefinitions>
+                 <GroupBox Header="Status" Grid.Row="0">
+                     <Grid>
+                         <Grid.RowDefinitions>
+                             <RowDefinition />
+                             <RowDefinition />
+                         </Grid.RowDefinitions>
+
+                         <Grid.ColumnDefinitions>
+                             <ColumnDefinition />
+                             <ColumnDefinition />
+                         </Grid.ColumnDefinitions>
+
+                         <Label Grid.Column="0" Grid.Row="0" Content="Watcher status:"/>
+                         <Label Grid.Column="1" 
+                                Grid.Row="0" 
+                                Style="{StaticResource WatcherStatusLableStyle}"/>
+
+                         <Label Grid.Column="0" Grid.Row="1" Content="File status:"/>
+                         <Label Grid.Column="1" 
+                                Grid.Row="1"  
+                               Content="{Binding FileStatus}"/>
+                    </Grid>
+                 </GroupBox>
+                
+
+                 <GroupBox Header="Create File" Grid.Row="1">
+                     <Grid>
+                         <Grid.RowDefinitions>
+                             <RowDefinition />
+                             <RowDefinition />
+                         </Grid.RowDefinitions>
+                         <Grid.ColumnDefinitions>
+                             <ColumnDefinition />
+                             <ColumnDefinition />
+                         </Grid.ColumnDefinitions>
+                         <Label Grid.Column="0" Grid.Row="0" Content="File Name:"/>
+                         <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}"/>
+                         <Button Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" Content="Create File" Margin="0 5" Command="{Binding CreateFileCommand}"/>
+                    </Grid>
+                 </GroupBox>
+
+                 <ToggleButton  Grid.Row="2" Content="Watcher On/Off" Margin="0 5" Command="{Binding WatcherToggleCommand}"/>
+
+                <GroupBox Header="Add To File" Grid.Row="3">
+                   <Grid  >
+                       <Grid.RowDefinitions>
+                           <RowDefinition Height="*"/>
+                           <RowDefinition Height="*"/>
+                       </Grid.RowDefinitions>
+
+                       <TextBox Grid.Row="0" Height="80" Text="{Binding AddToFileContent, UpdateSourceTrigger=PropertyChanged}"  Margin="0 5" ScrollViewer.CanContentScroll="True"/>
+                        <Button Grid.Row="1" Content="Add Data" Command="{Binding AddDataToFileCommand}"/>
+                   </Grid>
+                </GroupBox>
+
+                <Label Grid.Row="4" Content="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged }"/>
+
+            </Grid>
+         </Border>
         
     </Grid>
 </Window>
