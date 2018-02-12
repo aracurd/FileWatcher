@@ -24,7 +24,7 @@ namespace FileWatcher.Classes
             if (string.IsNullOrEmpty(fileName))
               return;
 
-            using ( var fs = new FileStream(fileName, FileMode.CreateNew,FileAccess.ReadWrite)) { }
+            using ( var _foleStream = new FileStream(fileName, FileMode.OpenOrCreate,FileAccess.ReadWrite)) { }
         }
 
         public void AddDataToFile(string data)
